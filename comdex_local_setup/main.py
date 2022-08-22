@@ -89,7 +89,7 @@ def Vote(option):
     if option not in ["yes", "no"]:
         exit("Invalid voting option")
     latestPropID = GetLatestPropID()
-    command = f"comdex tx gov vote {latestPropID} {option} --from {GENESIS_ACCOUNT_NAME} --chain-id {CHAIN_ID} --keyring-backend test -y"
+    command = f"comdex tx gov vote {latestPropID} {option} --from {GENESIS_ACCOUNT_NAME} --chain-id {CHAIN_ID} --keyring-backend test {HOME}  -y"
     output = subprocess.getstatusoutput(command)[1]
     output = json.loads(output)
     if int(output["code"]) != 0:
