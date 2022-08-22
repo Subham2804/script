@@ -447,7 +447,7 @@ WASM_CONTRACTS = [
     {
         "name": "Governance Contract",
         "contractAddressKey": "governance_contract",
-        "contractLink": "https://github.com/comdex-official/test-wasm-artifacts/raw/main/governance.wasm",
+        "contractLink": "https://github.com/comdex-official/test-wasm-artifacts/raw/prev_gov/governance.wasm",
         "contractPath": f"{COMDEX_DIR_PATH}/scripts/comdex_local_setup/governance.wasm",
         "initator": {
             "threshold": {"threshold_quorum": {"threshold": "0.50", "quorum": "0.33"}},
