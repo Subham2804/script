@@ -411,39 +411,39 @@ LEND_ASSET_PAIR_MAPPING = [
 ]
 
 WASM_CONTRACTS = [
-    {
-        "name": "Vesting Contract",
-        "contractAddressKey": "vesting_contract",
-        "contractLink": "https://github.com/comdex-official/test-wasm-artifacts/raw/main/token_vesting.wasm",
-        "contractPath": f"{COMDEX_DIR_PATH}/scripts/comdex_local_setup/token_vesting.wasm",
-        "initator": {},
-        "formatKeys": []
-    },
-    {
-        "name": "Locking Contract",
-        "contractAddressKey": "locking_contract",
-        "contractLink": "https://github.com/comdex-official/test-wasm-artifacts/raw/main/locking_contract.wasm",
-        "contractPath": f"{COMDEX_DIR_PATH}/scripts/comdex_local_setup/locking_contract.wasm",
-        "initator": {
-            "t1": {"period": 500, "weight": "0.25"},
-            "t2": {"period": 1000, "weight": "0.50"},
-            "t3": {"period": 3000, "weight": "0.75"},
-            "t4": {"period": 5000, "weight": "1.0"},
-            "voting_period": 22500,
-            "vesting_contract": "",
-            "foundation_addr": ["comdex1rljg3wwgv6qezu3p05vxny9pwk3mdwl0ja407z"],
-            "foundation_percentage": "0.2",
-            "surplus_asset_id": 3,
-            "emission": {
-                "app_id": 1,
-                "total_rewards": "10000000000000",
-                "rewards_pending": "10000000000000",
-                "emmission_rate": "0.01",
-                "distributed_rewards": "0",
-            },
-        },
-        "formatKeys": ['vesting_contract']
-    },
+    # {
+    #     "name": "Vesting Contract",
+    #     "contractAddressKey": "vesting_contract",
+    #     "contractLink": "https://github.com/comdex-official/test-wasm-artifacts/raw/main/token_vesting.wasm",
+    #     "contractPath": f"{COMDEX_DIR_PATH}/scripts/comdex_local_setup/token_vesting.wasm",
+    #     "initator": {},
+    #     "formatKeys": []
+    # },
+    # {
+    #     "name": "Locking Contract",
+    #     "contractAddressKey": "locking_contract",
+    #     "contractLink": "https://github.com/comdex-official/test-wasm-artifacts/raw/main/locking_contract.wasm",
+    #     "contractPath": f"{COMDEX_DIR_PATH}/scripts/comdex_local_setup/locking_contract.wasm",
+    #     "initator": {
+    #         "t1": {"period": 500, "weight": "0.25"},
+    #         "t2": {"period": 1000, "weight": "0.50"},
+    #         "t3": {"period": 3000, "weight": "0.75"},
+    #         "t4": {"period": 5000, "weight": "1.0"},
+    #         "voting_period": 22500,
+    #         "vesting_contract": "",
+    #         "foundation_addr": ["comdex1rljg3wwgv6qezu3p05vxny9pwk3mdwl0ja407z"],
+    #         "foundation_percentage": "0.2",
+    #         "surplus_asset_id": 3,
+    #         "emission": {
+    #             "app_id": 1,
+    #             "total_rewards": "10000000000000",
+    #             "rewards_pending": "10000000000000",
+    #             "emmission_rate": "0.01",
+    #             "distributed_rewards": "0",
+    #         },
+    #     },
+    #     "formatKeys": ['vesting_contract']
+    # },
     {
         "name": "Governance Contract",
         "contractAddressKey": "governance_contract",
@@ -452,19 +452,18 @@ WASM_CONTRACTS = [
         "initator": {
             "threshold": {"threshold_quorum": {"threshold": "0.50", "quorum": "0.33"}},
             "target": "0.0.0.0:9090",
-            "locking_contract": "",
         },
         "formatKeys": ['locking_contract']
     },
 ]
 
 WASM_PROPOSALS = [
-    {
-        "proposalID": 0,
-        "isProposal": False,
-        "contractAddressKey": "locking_contract",
-        "content": {"lock": {"app_id": 1, "locking_period": "t3"}},
-    },
+    # {
+    #     "proposalID": 0,
+    #     "isProposal": False,
+    #     "contractAddressKey": "locking_contract",
+    #     "content": {"lock": {"app_id": 1, "locking_period": "t3"}},
+    # },
     {
         "proposalID": 1,
         "isProposal": True,
@@ -572,12 +571,12 @@ WASM_PROPOSALS = [
                         {
                             "msg_set_auction_mapping_for_app": {
                                 "app_id": 1,
-                                "asset_id": 3,
-                                "is_surplus_auction": False,
-                                "is_debt_auction": False,
-                                "is_distributor": True,
-                                "asset_out_oracle_price": False,
-                                "asset_out_price": 1000000,
+                                "asset_id": [3],
+                                "is_surplus_auction": [False],
+                                "is_debt_auction":[ False],
+                                "is_distributor": [True],
+                                "asset_out_oracle_price": [False],
+                                "asset_out_price": [1000000],
                             }
                         }
                     ],
@@ -616,7 +615,7 @@ WASM_PROPOSALS = [
                         {
                             "msg_whitelist_app_id_locker_rewards": {
                                 "app_id": 1,
-                                "asset_id": 3,
+                                "asset_ids": [3],
                             }
                         }
                     ],

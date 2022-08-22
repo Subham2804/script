@@ -364,15 +364,15 @@ def CreateState():
     #     AddPair(pair[0], pair[1])
     #     Vote("yes")
     
-    AddAssetInAppsAndVote(1, 9)
-    # contractAddresses = StoreAndIntantiateWasmContract()
-    # for wasmProp in WASM_PROPOSALS:
-    #     contractAddress = contractAddresses[wasmProp['contractAddressKey']]
-    #     ProposeWasmProposal(contractAddress, wasmProp['content'], wasmProp['proposalID'])
-    #     print(f"waiting for wasm prop {wasmProp['proposalID']}")
-    #     if wasmProp['isProposal']:
-    #         time.sleep(APPS[0][3]) # waiting for proposal duration
-    #         ExecuteWasmGovernanceProposal(contractAddress, wasmProp['proposalID'])
+    #AddAssetInAppsAndVote(1, 9)
+    contractAddresses = StoreAndIntantiateWasmContract()
+    for wasmProp in WASM_PROPOSALS:
+        contractAddress = contractAddresses[wasmProp['contractAddressKey']]
+        ProposeWasmProposal(contractAddress, wasmProp['content'], wasmProp['proposalID'])
+        print(f"waiting for wasm prop {wasmProp['proposalID']}")
+        if wasmProp['isProposal']:
+            time.sleep(APPS[0][3]) # waiting for proposal duration
+            ExecuteWasmGovernanceProposal(contractAddress, wasmProp['proposalID'])
 
     # for liquidityPair in LIQUIDITY_PAIRS:
     #     if len(liquidityPair) != 3:
