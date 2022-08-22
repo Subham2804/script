@@ -98,7 +98,7 @@ def Vote(option):
     print(f"Vote submitted on Prop {latestPropID} ✔️")
 
 def AddApp(name, shortName, minGovDeposit=0, govTimeInSeconds=0):
-    command = f"""comdex tx gov submit-proposal add-app {name} {shortName} {minGovDeposit} {govTimeInSeconds} --title "New App" --description "Adding new app on comdex" --deposit 10000000ucmdx --from {GENESIS_ACCOUNT_NAME} --chain-id {CHAIN_ID} --keyring-backend test -y"""
+    command = f"""comdex tx gov submit-proposal add-app {name} {shortName} {minGovDeposit} {govTimeInSeconds} --title "New App" --description "Adding new app on comdex" --deposit 10000000ucmdx --from {GENESIS_ACCOUNT_NAME} --chain-id {CHAIN_ID} --keyring-backend test {HOME} -y """
     output = subprocess.getstatusoutput(command)[1]
     output = json.loads(output)
     if int(output["code"]) != 0:
@@ -121,7 +121,7 @@ def AddAsset(name, denom, isOnChain=1, assetOraclePriceRequired=1):
     with open(fileName, "w") as jsonFile:
         json.dump(jsonData, jsonFile)
     
-    command = f"""comdex tx gov submit-proposal add-assets --add-assets-file "{fileName}" --from {GENESIS_ACCOUNT_NAME} --chain-id {CHAIN_ID} --keyring-backend test -y"""
+    command = f"""comdex tx gov submit-proposal add-assets --add-assets-file "{fileName}" --from {GENESIS_ACCOUNT_NAME} --chain-id {CHAIN_ID} --keyring-backend test {HOME}  -y"""
     output = subprocess.getstatusoutput(command)[1]
     output = json.loads(output)
     if int(output["code"]) != 0:
@@ -132,7 +132,7 @@ def AddAsset(name, denom, isOnChain=1, assetOraclePriceRequired=1):
     print(f"New Asset {name} Proposal  Submitted ✔️")
 
 def AddPair(assetID1, assetID2):
-    command = f"""comdex tx gov submit-proposal add-pairs {assetID1} {assetID2}  --title "New Pair" --description "Adding new pair" --deposit 10000000ucmdx --from {GENESIS_ACCOUNT_NAME} --chain-id {CHAIN_ID} --keyring-backend test -y"""
+    command = f"""comdex tx gov submit-proposal add-pairs {assetID1} {assetID2}  --title "New Pair" --description "Adding new pair" --deposit 10000000ucmdx --from {GENESIS_ACCOUNT_NAME} --chain-id {CHAIN_ID} --keyring-backend test {HOME}  -y"""
     output = subprocess.getstatusoutput(command)[1]
     output = json.loads(output)
     if int(output["code"]) != 0:
@@ -142,7 +142,7 @@ def AddPair(assetID1, assetID2):
 
 def MintToken(appID, assetID):
     print("Minting token for previosly added asset in app..")
-    command = f"comdex tx tokenmint tokenmint {appID} {assetID} --from {GENESIS_ACCOUNT_NAME} --chain-id {CHAIN_ID} --keyring-backend test -y"
+    command = f"comdex tx tokenmint tokenmint {appID} {assetID} --from {GENESIS_ACCOUNT_NAME} --chain-id {CHAIN_ID} --keyring-backend test {HOME} -y"
     output = subprocess.getstatusoutput(command)[1]
     output = json.loads(output)
     if int(output["code"]) != 0:
@@ -165,7 +165,7 @@ def AddAssetInAppsAndVote(appID, assetID):
     with open(fileName, "w") as jsonFile:
         json.dump(jsonData, jsonFile)
 
-    command = f"""comdex tx gov submit-proposal add-asset-in-app --add-asset-mapping-file "{fileName}" --from {GENESIS_ACCOUNT_NAME} --chain-id {CHAIN_ID} --keyring-backend test -y"""
+    command = f"""comdex tx gov submit-proposal add-asset-in-app --add-asset-mapping-file "{fileName}" --from {GENESIS_ACCOUNT_NAME} --chain-id {CHAIN_ID} --keyring-backend test {HOME}  -y"""
     output = subprocess.getstatusoutput(command)[1]
     output = json.loads(output)
     if int(output["code"]) != 0:
