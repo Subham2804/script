@@ -346,23 +346,23 @@ def AddLendAuctionParamsAndVote():
     Vote("yes")
 
 def CreateState():
-    for app in APPS:
-        if len(app) != 4:
-            exit("Invalid app configs")
-        AddApp(app[0], app[1], app[2], app[3])
-        Vote("yes")
+    # for app in APPS:
+    #     if len(app) != 4:
+    #         exit("Invalid app configs")
+    #     AddApp(app[0], app[1], app[2], app[3])
+    #     Vote("yes")
     
-    for asset in ASSETS:
-        if len(asset) != 4:
-            exit("Invalid asset configs")
-        AddAsset(asset[0], asset[1], asset[2], asset[3])
-        Vote("yes")
+    # for asset in ASSETS:
+    #     if len(asset) != 4:
+    #         exit("Invalid asset configs")
+    #     AddAsset(asset[0], asset[1], asset[2], asset[3])
+    #     Vote("yes")
     
-    for pair in PAIRS:
-        if len(pair) != 2:
-            exit("Invalid pairs configs")
-        AddPair(pair[0], pair[1])
-        Vote("yes")
+    # for pair in PAIRS:
+    #     if len(pair) != 2:
+    #         exit("Invalid pairs configs")
+    #     AddPair(pair[0], pair[1])
+    #     Vote("yes")
     
     AddAssetInAppsAndVote(1, 9)
     # contractAddresses = StoreAndIntantiateWasmContract()
