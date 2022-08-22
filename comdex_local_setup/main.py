@@ -80,7 +80,7 @@ def GetLatestPropID():
     return int(proposals["proposals"][-1]["proposal_id"])
 
 def GetGenesisAccAddress():
-    command = f"comdex keys show {GENESIS_ACCOUNT_NAME} --keyring-backend test --output json"
+    command = f"comdex keys show {GENESIS_ACCOUNT_NAME} --keyring-backend test --output {HOME} json"
     output = subprocess.getstatusoutput(command)[1]
     output = json.loads(output)
     return output["address"]
