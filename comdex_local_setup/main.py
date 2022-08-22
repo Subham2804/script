@@ -213,7 +213,7 @@ def StoreAndIntantiateWasmContract():
         print(f"fetching test {contractData['name']} ....")
         wget.download(contractData['contractLink'], contractData['contractPath'])
 
-        command = f"comdex tx wasm store {contractData['contractPath']} --from {GENESIS_ACCOUNT_NAME}  --chain-id {CHAIN_ID} --gas 5000000 --gas-adjustment 1.3 --keyring-backend test  -y  --output json"
+        command = f"comdex tx wasm store {contractData['contractPath']} --from {GENESIS_ACCOUNT_NAME}  --chain-id {CHAIN_ID} --gas 5000000 --gas-adjustment 1.3 --keyring-backend test  -y {HOME} --output json"
         output = subprocess.getstatusoutput(command)[1]
         output = json.loads(output)
         if int(output["code"]) != 0:
@@ -225,7 +225,7 @@ def StoreAndIntantiateWasmContract():
             contractData['initator'][keys] = contractAddresses[keys]
 
         currentCodeID = GetLastContractCodeID()
-        command = f"""comdex tx wasm instantiate {currentCodeID} '{json.dumps(contractData['initator'])}' --label "Instantiate {contractData['name']}" --no-admin --from {GENESIS_ACCOUNT_NAME} --chain-id {CHAIN_ID} --gas 5000000 --gas-adjustment 1.3 --keyring-backend test -y"""
+        command = f"""comdex tx wasm instantiate {currentCodeID} '{json.dumps(contractData['initator'])}' --label "Instantiate {contractData['name']}" --no-admin --from {GENESIS_ACCOUNT_NAME} --chain-id {CHAIN_ID} --gas 5000000 --gas-adjustment 1.3 {HOME} --keyring-backend test -y"""
         output = subprocess.getstatusoutput(command)[1]
         output = json.loads(output)
         if int(output["code"]) != 0:
@@ -245,7 +245,7 @@ def ExecuteWasmGovernanceProposal(contractAddress, proposalID):
             "proposal_id":proposalID
         }
     }
-    command = f"""comdex tx wasm execute {contractAddress} '{json.dumps(execute)}' --from {GENESIS_ACCOUNT_NAME} --chain-id {CHAIN_ID} --gas 5000000 --keyring-backend test -y"""
+    command = f"""comdex tx wasm execute {contractAddress} '{json.dumps(execute)}' --from {GENESIS_ACCOUNT_NAME} --chain-id {CHAIN_ID} --gas 5000000 {HOME} --keyring-backend test -y"""
     output = subprocess.getstatusoutput(command)[1]
     output = json.loads(output)
     if int(output["code"]) != 0:
@@ -254,7 +254,7 @@ def ExecuteWasmGovernanceProposal(contractAddress, proposalID):
     print(f"Proposal with ID {proposalID} executed successfully ✔️")
 
 def ProposeWasmProposal(contractAddress, proposal, proposlID):
-    command = f"""comdex tx wasm execute {contractAddress}  '{json.dumps(proposal)}' --amount 100000000uharbor --from {GENESIS_ACCOUNT_NAME}  --chain-id {CHAIN_ID} --gas 5000000 --keyring-backend test -y"""
+    command = f"""comdex tx wasm execute {contractAddress}  '{json.dumps(proposal)}' --amount 100000000uharbor --from {GENESIS_ACCOUNT_NAME}  --chain-id {CHAIN_ID} --gas 5000000 {HOME} --keyring-backend test -y"""
     output = subprocess.getstatusoutput(command)[1]
     output = json.loads(output)
     if int(output["code"]) != 0:
