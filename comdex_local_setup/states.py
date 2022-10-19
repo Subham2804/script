@@ -18,10 +18,10 @@ ASSETS = [
     ["CCMDX", "uccmdx", 0, 0,"1000000"],  # ID - 6
     ["CCMST", "uccmst", 0, 0,"1000000"],  # ID - 7
     ["COSMO", "ucosmo", 0, 0,"1000000"],  # ID - 8
-    ["HARBOR", "uharbor", 1, 0,"1000000"], 
-    ["ETH", "ueth", 0, 1,"1000000000000000000"],
-    ["CGOLD", "ucgold", 0, 1,"1000000"],
-    ["CSILVER", "ucsilver", 0, 1,"1000000"] # ID - 9
+    ["HARBOR", "uharbor", 1, 0,"1000000"]
+    ["ETH", "ueth", 0, 1,"1000000"]
+    ["CGOLD", "ucgold", 0, 1,"1000000"]
+    ["CSILVER", "ucSilver", 0, 1,"1000000"],  # ID - 9
 ]
 
 PAIRS = [
