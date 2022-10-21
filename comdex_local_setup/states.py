@@ -2,38 +2,29 @@ from constants import *
 
 APPS = [
     # [name, shortName, minGovDeposit, govTimeInSeconds]
-   
+    ["harbor", "hbr", 1000000, 5],  # ID - 1
     ["cswap", "cswap", 0, 0],  # ID - 2
-     ["harbor", "hbr", 1000000, 3],  # ID - 1
     ["commodo", "comdo", 0, 0],  # ID - 3
 ]
 
 ASSETS = [
     # [name, denom, isOnChain, assetOraclePriceRequired]
-    ["ATOM", "uatom", 0, 1,"1000000"],  # ID - 1
-    ["CMDX", "ucmdx", 0, 1,"1000000"],  # ID - 2
-    ["CMST", "ucmst", 0, 0,"1000000"],  # ID - 3
-    ["OSMO", "uosmo", 0, 1,"1000000"],  # ID - 4
-    ["CATOM", "ucatom", 0, 0,"1000000"],  # ID - 5
-    ["CCMDX", "uccmdx", 0, 0,"1000000"],  # ID - 6
-    ["CCMST", "uccmst", 0, 0,"1000000"],  # ID - 7
-    ["COSMO", "ucosmo", 0, 0,"1000000"],  # ID - 8
-    ["HARBOR", "uharbor", 1, 0,"1000000"],
-    ["ETH", "ueth", 0, 1,"1000000"],
-    ["CGOLD", "ucgold", 0, 1,"1000000"],
-    ["CSILVER", "ucSilver", 0, 1,"1000000"],  # ID - 9
+    ["ATOM", "uatom", 0, 1],  # ID - 1
+    ["CMDX", "ucmdx", 0, 1],  # ID - 2
+    ["CMST", "ucmst", 0, 0],  # ID - 3
+    ["OSMO", "uosmo", 0, 1],  # ID - 4
+    ["CATOM", "ucatom", 0, 0],  # ID - 5
+    ["CCMDX", "uccmdx", 0, 0],  # ID - 6
+    ["CCMST", "uccmst", 0, 0],  # ID - 7
+    ["COSMO", "ucosmo", 0, 0],  # ID - 8
+    ["HARBOR", "uharbor", 1, 0],  # ID - 9
 ]
 
 PAIRS = [
     # [assetID1, assetID2]
     [1, 3],  # ID - 1
     [2, 3],  # ID - 2
-    [4, 3], 
-    [10,3],
-    [1,11],
-    [2,11],
-    [1,12],
-    [2,12] # ID - 3
+    [4, 3],  # ID - 3
 ]
 
 LIQUIDITY_PAIRS = [
@@ -146,11 +137,9 @@ ADD_ASSET_RATES = [
 ADD_LEND_POOL = [
     {
         "module_name": "cmdx",
-        "main_asset_id": "2",
-        "first_bridged_asset_id": "3",
-        "second_bridged_asset_id": "1",
         "asset_id": "1,2,3",
-        "is_bridged_asset": "1,0,1",
+        "asset_transit_type": "3,1,2",
+        "supply_cap": "5000000000000000000,1000000000000000000,5000000000000000000",
         "c_pool_name": "CMDX-ATOM-CMST",
         "reserve_funds": "100000000",
         "title": "Add pool",
@@ -159,11 +148,9 @@ ADD_LEND_POOL = [
     },
     {
         "module_name": "osmo",
-        "main_asset_id": "4",
-        "first_bridged_asset_id": "3",
-        "second_bridged_asset_id": "1",
         "asset_id": "1,4,3",
-        "is_bridged_asset": "1,0,1",
+        "asset_transit_type": "3,1,2",
+        "supply_cap": "5000000000000000000,3000000000000000000,5000000000000000000",
         "c_pool_name": "OSMO-ATOM-CMST",
         "reserve_funds": "100000000",
         "title": "Add pool",
@@ -424,7 +411,7 @@ WASM_CONTRACTS = [
         "name": "Vesting Contract",
         "contractAddressKey": "vesting_contract",
         "contractLink": "https://github.com/comdex-official/test-wasm-artifacts/raw/main/token_vesting.wasm",
-        "contractPath": f"{COMDEX_DIR_PATH}/token_vesting.wasm",
+        "contractPath": f"./token_vesting.wasm",
         "initator": {},
         "formatKeys": []
     },
@@ -432,7 +419,7 @@ WASM_CONTRACTS = [
         "name": "Locking Contract",
         "contractAddressKey": "locking_contract",
         "contractLink": "https://github.com/comdex-official/test-wasm-artifacts/raw/main/locking_contract.wasm",
-        "contractPath": f"{COMDEX_DIR_PATH}/locking_contract.wasm",
+        "contractPath": f"./locking_contract.wasm",
         "initator": {
             "t1": {"period": 500, "weight": "0.25"},
             "t2": {"period": 1000, "weight": "0.50"},
@@ -444,12 +431,14 @@ WASM_CONTRACTS = [
             "foundation_percentage": "0.2",
             "surplus_asset_id": 3,
             "emission": {
-                "app_id": 2,
+                "app_id": 1,
                 "total_rewards": "10000000000000",
                 "rewards_pending": "10000000000000",
-                "emmission_rate": "0.01",
+                "emission_rate": "0.01",
                 "distributed_rewards": "0",
             },
+            "min_lock_amount" : "200",
+            "admin":"comdex1rljg3wwgv6qezu3p05vxny9pwk3mdwl0ja407z"
         },
         "formatKeys": ['vesting_contract']
     },
@@ -457,7 +446,7 @@ WASM_CONTRACTS = [
         "name": "Governance Contract",
         "contractAddressKey": "governance_contract",
         "contractLink": "https://github.com/comdex-official/test-wasm-artifacts/raw/main/governance.wasm",
-        "contractPath": f"{COMDEX_DIR_PATH}/governance.wasm",
+        "contractPath": f"./governance.wasm",
         "initator": {
             "threshold": {"threshold_quorum": {"threshold": "0.50", "quorum": "0.33"}},
             "target": "0.0.0.0:9090",
@@ -472,7 +461,7 @@ WASM_PROPOSALS = [
         "proposalID": 0,
         "isProposal": False,
         "contractAddressKey": "locking_contract",
-        "content": {"lock": {"app_id": 2, "locking_period": "t3"}},
+        "content": {"lock": {"app_id": 1, "locking_period": "t3"}},
     },
     {
         "proposalID": 1,
@@ -486,25 +475,25 @@ WASM_PROPOSALS = [
                     "msgs": [
                         {
                             "msg_add_extended_pairs_vault": {
-                                "app_id": 2,
-                                "pair_id": 2,
+                                "app_id": 1,
+                                "pair_id": 1,
                                 "stability_fee": "0.025",
                                 "closing_fee": "0.00",
                                 "liquidation_penalty": "0.12",
                                 "draw_down_fee": "0.001",
                                 "is_vault_active": True,
-                                "debt_ceiling": 1000000000000000,
-                                "debt_floor": 100,
+                                "debt_ceiling": 1000000000000,
+                                "debt_floor": 100000000,
                                 "is_stable_mint_vault": False,
                                 "min_cr": "1.7",
-                                "pair_name": "CMDX-A",
+                                "pair_name": "ATOM-A",
                                 "asset_out_oracle_price": False,
                                 "asset_out_price": 1000000,
-                                "min_usd_value_left":  1000000,
+                                "min_usd_value_left": 100000,
                             }
                         }
                     ],
-                    "app_id_param": 2,
+                    "app_id_param": 1,
                 }
             }
         },
@@ -521,7 +510,7 @@ WASM_PROPOSALS = [
                     "msgs": [
                         {
                             "msg_set_collector_lookup_table": {
-                                "app_id": 2,
+                                "app_id": 1,
                                 "collector_asset_id": 3,
                                 "secondary_asset_id": 9,
                                 "surplus_threshold": 10000000000,
@@ -533,7 +522,7 @@ WASM_PROPOSALS = [
                             }
                         }
                     ],
-                    "app_id_param": 2,
+                    "app_id_param": 1,
                 }
             }
         },
@@ -550,10 +539,10 @@ WASM_PROPOSALS = [
                     "msgs": [
                         {
                             "msg_add_auction_params": {
-                                "app_id": 2,
-                                "auction_duration_seconds": 4600,
+                                "app_id": 1,
+                                "auction_duration_seconds": 20,
                                 "buffer": "1.2",
-                                "cusp": "0.8",
+                                "cusp": "0.4",
                                 "step": 360,
                                 "price_function_type": 1,
                                 "surplus_id": 1,
@@ -563,7 +552,7 @@ WASM_PROPOSALS = [
                             }
                         }
                     ],
-                    "app_id_param": 2,
+                    "app_id_param": 1,
                 }
             }
         },
@@ -580,17 +569,17 @@ WASM_PROPOSALS = [
                     "msgs": [
                         {
                             "msg_set_auction_mapping_for_app": {
-                                "app_id": 2,
+                                "app_id": 1,
                                 "asset_id": 3,
                                 "is_surplus_auction": False,
                                 "is_debt_auction": False,
-                                "is_distributor": False,
+                                "is_distributor": True,
                                 "asset_out_oracle_price": False,
                                 "asset_out_price": 1000000,
                             }
                         }
                     ],
-                    "app_id_param": 2,
+                    "app_id_param": 1,
                 }
             }
         },
@@ -605,9 +594,9 @@ WASM_PROPOSALS = [
                     "title": "New proposal to whitelist CMST for locker",
                     "description": "This is an base  execution proposal to add use CMST as locker deposit asset.",
                     "msgs": [
-                        {"msg_white_list_asset_locker": {"app_id": 2, "asset_id": 3}}
+                        {"msg_white_list_asset_locker": {"app_id": 1, "asset_id": 3}}
                     ],
-                    "app_id_param": 2,
+                    "app_id_param": 1,
                 }
             }
         },
@@ -624,12 +613,12 @@ WASM_PROPOSALS = [
                     "msgs": [
                         {
                             "msg_whitelist_app_id_locker_rewards": {
-                                "app_id": 2,
+                                "app_id": 1,
                                 "asset_id": 3,
                             }
                         }
                     ],
-                    "app_id_param": 2,
+                    "app_id_param": 1,
                 }
             }
         },
@@ -643,8 +632,8 @@ WASM_PROPOSALS = [
                 "propose": {
                     "title": "New proposal to whitelist CMST for locker",
                     "description": "This is an base  execution proposal to add use CMST as locker deposit asset.",
-                    "msgs": [{"msg_whitelist_app_id_vault_interest": {"app_id": 2}}],
-                    "app_id_param": 2,
+                    "msgs": [{"msg_whitelist_app_id_vault_interest": {"app_id": 1}}],
+                    "app_id_param": 1,
                 }
             }
         },
@@ -658,8 +647,8 @@ WASM_PROPOSALS = [
                 "propose": {
                     "title": "New proposal for add pair for CMDX",
                     "description": "This is an base proposal execution proposal to add CMDX-CMST n.",
-                    "msgs": [{"msg_whitelist_app_id_liquidation": {"app_id": 2}}],
-                    "app_id_param": 2,
+                    "msgs": [{"msg_whitelist_app_id_liquidation": {"app_id": 1}}],
+                    "app_id_param": 1,
                 }
             }
         },
@@ -676,15 +665,15 @@ WASM_PROPOSALS = [
                     "msgs": [
                         {
                             "msg_add_e_s_m_trigger_params": {
-                                "app_id": 2,
-                                "target_value": {"amount": "2000", "denom": "uharbor"},
-                                "cool_off_period": 7200,
+                                "app_id": 1,
+                                "target_value": {"amount": "200", "denom": "uharbor"},
+                                "cool_off_period": 60,
                                 "asset_id": [3],
                                 "rates": [1000000],
                             }
                         }
                     ],
-                    "app_id_param": 2,
+                    "app_id_param": 1,
                 }
             }
         },
@@ -701,25 +690,25 @@ WASM_PROPOSALS = [
                     "msgs": [
                         {
                             "msg_add_extended_pairs_vault": {
-                                "app_id": 2,
-                                "pair_id": 1,
+                                "app_id": 1,
+                                "pair_id": 2,
                                 "stability_fee": "0.025",
                                 "closing_fee": "0.00",
                                 "liquidation_penalty": "0.12",
                                 "draw_down_fee": "0.001",
                                 "is_vault_active": True,
                                 "debt_ceiling": 1000000000000,
-                                "debt_floor": 100,
+                                "debt_floor": 100000000,
                                 "is_stable_mint_vault": False,
                                 "min_cr": "1.7",
-                                "pair_name": "ETH-A",
+                                "pair_name": "CMDX-A",
                                 "asset_out_oracle_price": False,
                                 "asset_out_price": 1000000,
-                                "min_usd_value_left": 1000000,
+                                "min_usd_value_left": 100000,
                             }
                         }
                     ],
-                    "app_id_param": 2,
+                    "app_id_param": 1,
                 }
             }
         },

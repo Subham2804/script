@@ -106,11 +106,11 @@ def AddApp(name, shortName, minGovDeposit=0, govTimeInSeconds=0):
         exit("error in add app prop")
     print(f"New App {name} Proposal  Submitted ✔️")
 
-def AddAsset(name, denom, isOnChain=1, assetOraclePriceRequired=1,decimal1="1000000"):
+def AddAsset(name, denom, isOnChain=1, assetOraclePriceRequired=1):
     jsonData = {
         "name" : name,
         "denom" : denom,
-        "decimals" : decimal1,
+        "decimals" :"1000000",
         "is_on_chain" :str(isOnChain),
         "asset_oracle_price" :str(assetOraclePriceRequired),
         "title" :"Add assets for applications to be deployed on comdex chain",
@@ -267,7 +267,7 @@ def AddAssetRates(assetName, jsonData):
     with open(fileName, "w") as jsonFile:
         json.dump(jsonData, jsonFile)
     
-    command = f"""comdex tx gov submit-proposal add-asset-rates-stats --add-asset-rates-stats-file '{fileName}' --from {GENESIS_ACCOUNT_NAME} --chain-id {CHAIN_ID} --keyring-backend test --gas 5000000 -y"""
+    command = f"""comdex tx gov submit-proposal add-asset-rates-params --add-asset-rates-params-file '{fileName}' --from {GENESIS_ACCOUNT_NAME} --chain-id {CHAIN_ID} --keyring-backend test --gas 5000000 -y"""
     output = subprocess.getstatusoutput(command)[1]
     output = json.loads(output)
     if int(output["code"]) != 0:
@@ -353,9 +353,9 @@ def CreateState():
         Vote("yes")
     
     for asset in ASSETS:
-        if len(asset) != 5:
+        if len(asset) != 4:
             exit("Invalid asset configs")
-        AddAsset(asset[0], asset[1], asset[2], asset[3],asset[4])
+        AddAsset(asset[0], asset[1], asset[2], asset[3])
         Vote("yes")
     
     for pair in PAIRS:
@@ -364,15 +364,14 @@ def CreateState():
         AddPair(pair[0], pair[1])
         Vote("yes")
     
-    AddAssetInAppsAndVote(2, 9)
+    AddAssetInAppsAndVote(1, 9)
     contractAddresses = StoreAndIntantiateWasmContract()
-
     for wasmProp in WASM_PROPOSALS:
         contractAddress = contractAddresses[wasmProp['contractAddressKey']]
         ProposeWasmProposal(contractAddress, wasmProp['content'], wasmProp['proposalID'])
         print(f"waiting for wasm prop {wasmProp['proposalID']}")
         if wasmProp['isProposal']:
-            time.sleep(5) # waiting for proposal duration
+            time.sleep(APPS[0][3]) # waiting for proposal duration
             ExecuteWasmGovernanceProposal(contractAddress, wasmProp['proposalID'])
 
     for liquidityPair in LIQUIDITY_PAIRS:
@@ -380,12 +379,12 @@ def CreateState():
             exit("Invalid liquidity pair configs")
         CreateLiquidityPair(liquidityPair[0], liquidityPair[1], liquidityPair[2])
         Vote("yes")
-    
+
     for liquidityPool in LIQUIDITY_POOLS:
         if len(liquidityPool) != 3:
             exit("Invalid liquidity pool configs")
         CreateLiquidityPool(liquidityPool[0], liquidityPool[1], liquidityPool[2])
-    
+
     for assetRate in ADD_ASSET_RATES:
         if len(assetRate) != 2:
             exit("Invalid add asset rate configs")
